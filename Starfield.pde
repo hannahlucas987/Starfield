@@ -27,14 +27,15 @@ class Particle{
       fill(myColor, 0, myColor);
     else if (randoC == 5)
       fill(0, myColor, myColor);
-    else
+    else if (randoC == 6)
       fill(myColor, myColor, myColor);
-    ellipse((float)(myX), (float)(myY), mySize, mySize);
+    else
+      fill((float)myColor, (float)myColor, (float)myColor);
+    ellipse((float)(myX), (float)(myY), (float)mySize, (float)mySize);
   }
 }
 
 class Asteroid extends Particle{
-  double myX, myY, myColor, mySize, mySpeed, myAngle;
   Asteroid(){
     myX = (int)(Math.random()*10)+195;
     myY = (int)(Math.random()*10)+195;
@@ -42,24 +43,19 @@ class Asteroid extends Particle{
     myAngle = (Math.random()*360)+1;
     mySpeed = 1;
     mySize = 10;
-  }
-  void move(){
-    myX += cos((float)(myAngle*(PI/180)))*mySpeed;
-    myY += sin((float)(myAngle*(PI/180)))*mySpeed;
-  }
-  void show(){
-    fill((float)myColor, (float)myColor, (float)myColor);
-    ellipse((float)(myX), (float)(myY), (float)mySize, (float)mySize);
+    randoC = 7;
   }
 }
 
-Particle [] things = new Particle [500];
-Asteroid flow = new Asteroid();
+Particle [] things = new Particle [800];
 
 void setup(){
   size(400, 400);
   noStroke();
   for(int i = 0; i<things.length; i++){
+    things[i] = new Asteroid();
+  }
+  for(int i = 1; i<things.length; i++){
     things[i] = new Particle();
   }
 }
@@ -69,11 +65,12 @@ void draw(){
     things[i].move();
     things[i].show();
   }
-  flow.move();
-  flow.show();
 }
 void mousePressed(){
   for(int i = 0; i<things.length; i++){
+    things[i] = new Asteroid();
+  }
+  for(int i = 1; i<things.length; i++){
     things[i] = new Particle();
   }
   redraw();
